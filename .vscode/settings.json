@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "grab.h": "c",
+        "tree.h": "c",
+        "stdio.h": "c",
+        "node.h": "c",
+        "main.h": "c",
+        "string.h": "c",
+        "stdlib.h": "c",
+        "counter.h": "c",
+        "stdbool.h": "c"
+    }
+}
