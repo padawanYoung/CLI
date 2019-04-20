@@ -15,7 +15,8 @@ typedef struct Node{
 	struct Node * next;
 }Node_t;
 
-void Node_callback (callBack_t * cb);
+bool Node_hasCallBack(Node_t *node);
+void Node_executeCallback(Node_t *node);
 bool  Node_hasChild (Node_t * node);
 bool  Node_hasNext (Node_t * node);
 Node_t * Node_getChild (Node_t * node);

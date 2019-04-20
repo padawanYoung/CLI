@@ -1,5 +1,5 @@
 # This is my first Makefile
-SRC = main.c Tree.c Node.c Grab.c Counter.c
+SRC = main.c Tree.c Node.c Grab.c Counter.c Buffer.c
 OBJS = $(addsuffix .o, $(basename $(SRC)))
 CFLAGS = -Wall
 #Enable compilator's warnings

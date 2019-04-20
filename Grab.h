@@ -10,9 +10,11 @@
 #define _SeparateSymbol 32  // SPASE
 #define _NewLineSymbol  10 // new line
 
+
+
 bool Grab_getIRD_Flag ();
 void Grab_setIRD_Flag (bool status);
 char * Grab_cmd_FILE (FILE *pointer);
 char * Grab_cmd (const char * expression);
-float Grab_value (const char * expression);
+bool Grab_value(const char *expression, float * value);
 #endif /* GRAB_H_ */

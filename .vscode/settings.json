@@ -8,6 +8,8 @@
         "string.h": "c",
         "stdlib.h": "c",
         "counter.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "cli.h": "c",
+        "buffer.h": "c"
     }
 }

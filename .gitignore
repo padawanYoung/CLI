@@ -1,0 +1,12 @@
+# ignore all *o && *.a
+
+*[oa]
+*.swk
+*.swl
+*.swn
+*.swm
+*.swo
+*.swp
+
+# ignore folders 
+.vscode/ipch/
