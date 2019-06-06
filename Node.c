@@ -57,6 +57,10 @@ void Node_addNext(Node_t *node, Node_t *nextNode)
 
 bool Node_isTheSame(const char *cmd, const char *template)
 {
+	if( !cmd || !template )
+	{
+		return false;
+	}
 	if (strcmp(cmd, template) == 0)
 	{
 		return true;

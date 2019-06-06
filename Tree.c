@@ -5,8 +5,6 @@ Node_t *Tree_Root = NULL;
 bool isWorking = true;
 object_t Tree_obj;
 
-char * buffer = NULL;
-
 void Tree_erase(Node_t *node)
 {
 	Node_t *child = node->child;
@@ -79,14 +77,12 @@ void Tree_RegCommand(const char *Expression, float value, callBack_t action)
 
 void Tree_ExecuteCommand()
 {
-	// char *cmd = NULL;
+	char *cmd = NULL;
 	char *temp = NULL;
-	Tree = Tree_Root;
 	Grab_setIRD_Flag(false);
 
-	// Buffer_Write(Grab_cmd_FILE(stdin));
-	// cmd = Buffer_Read();
-	buffer = Grab_cmd_FILE(stdin);
+	Buffer_Write(Grab_cmd_FILE(stdin));
+	cmd = Buffer_Read();
 
 	if (Tree && Node_hasChild(Tree))
 	{
@@ -100,7 +96,7 @@ void Tree_ExecuteCommand()
 
 	while (!Grab_getIRD_Flag())
 	{
-		temp = Grab_cmd(buffer);
+		temp = Grab_cmd(cmd);
 		bool isFound = Node_isFound(&Tree, temp);
 		free(temp);
 		temp = NULL;
@@ -111,34 +107,32 @@ void Tree_ExecuteCommand()
 		}
 		else if (isFound && Node_hasCallBack(Tree))
 		{
-			//Node_executeCallback(Tree);
+			Node_executeCallback(Tree);
 			break;
 		}
 		else
 		{
-			printf("Command %s wasn't found\n", buffer);
+			printf("Command %s wasn't found\n", cmd);
 			break;
 		}
 	}
 
-	// Buffer_Clean();
-	// cmd = NULL;
-	free(buffer);
-	buffer = NULL;
+	Buffer_Clean();
+	Tree = Tree_Root;
 }
 
 void Tree_Init()
 {
 	Tree_obj.get = (char *)malloc(sizeof(char) * 4);
 	Tree_obj.set = (char *)malloc(sizeof(char) * 4);
-	strcpy((Tree_obj.get),"get");
-	strcpy((Tree_obj.set),"set");
+	strcpy((Tree_obj.get), "get");
+	strcpy((Tree_obj.set), "set");
 
 	Tree_RegCommand("ROOT", 0, NULL);
 	Tree_RegCommand("shutdown", 0, &shutDown_Callback);
-	Tree_RegCommand("const pi get", 3.14, &get_Callback);
+	Tree_RegCommand("const pi get", 0, &get_Callback);
 	Tree_RegCommand("const pi set", 3.14, &set_Callback);
- 	Tree_RegCommand("const a set", 45, &set_Callback);
+	Tree_RegCommand("const a set", 45, &set_Callback);
 	Tree_RegCommand("const a get", 0, &get_Callback);
 	Tree_RegCommand("b set", 56, &set_Callback);
 	Tree_RegCommand("b get", 0, &get_Callback);
@@ -148,10 +142,10 @@ void Tree_Run_CLI()
 {
 	printf("Command Line Interface has started\n");
 	printf("==================================\n");
-	// while (isWorking)
-	// {
+	while (isWorking)
+	{
 		Tree_ExecuteCommand();
-	// }
+	}
 	printf("==================================\n");
 	printf("End of programm\n");
 }
@@ -168,8 +162,8 @@ void Tree_DeInit()
 
 void set_Callback()
 {
-	// char *temp = Buffer_Read();
-	if (!Grab_value(buffer, &(Tree->val)))
+	char *Expression = Buffer_Read();
+	if (!Grab_value(Expression, &(Tree->val)))
 	{
 		printf("Wrong argument\n");
 	}
@@ -178,7 +172,7 @@ void set_Callback()
 void get_Callback()
 {
 	Grab_setIRD_Flag(false);
-	// char *Expression = Buffer_Read();
+	char *Expression = Buffer_Read();
 	Tree = Tree_Root;
 
 	if (Tree && Node_hasChild(Tree))
@@ -188,11 +182,12 @@ void get_Callback()
 
 	while (!Grab_getIRD_Flag())
 	{
-		char * temp = Grab_cmd(buffer);
-		if (Node_isTheSame(temp,Tree_obj.get)){
+		char *temp = Grab_cmd(Expression);
+		if (Node_isTheSame(temp, Tree_obj.get))
+		{
 			free(temp);
 			temp = NULL;
-			temp = (char*) malloc(sizeof(Tree_obj.set));
+			temp = (char *)malloc(sizeof(Tree_obj.set));
 			strcpy(temp, Tree_obj.set);
 		}
 		if ((Node_isFound(&Tree, temp)) && (Node_hasChild(Tree)))
