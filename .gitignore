@@ -9,6 +9,8 @@
 *.swp
 *.out
 
+core
+
 # ignore folders 
 .vscode/*
 !.vscode/settings.json
