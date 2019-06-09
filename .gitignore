@@ -10,3 +10,4 @@
 
 # ignore folders 
 .vscode/ipch/
+vscode/**/*.ipch
